@@ -7,6 +7,10 @@
 
 namespace Sberbank\Message;
 
+/**
+ * Interface ResponseInterface
+ * @package Sberbank\Message
+ */
 interface ResponseInterface
 {
     /**
@@ -34,4 +38,18 @@ interface ResponseInterface
      * @return null|string A response code from Sberbank gateway
      */
     public function getCode();
+
+    /**
+     * Sberbank error code
+     *
+     * @return int|null
+     */
+    public function getErrorCode();
+
+    /**
+     * Sberbank error message
+     *
+     * @return string
+     */
+    public function getErrorMessage();
 }

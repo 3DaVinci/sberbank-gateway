@@ -7,6 +7,10 @@
 
 namespace Sberbank\Message;
 
+/**
+ * Class RestResponse
+ * @package Sberbank\Message
+ */
 class RestResponse implements ResponseInterface
 {
     /**
@@ -23,6 +27,9 @@ class RestResponse implements ResponseInterface
      */
     protected $data;
 
+    /**
+     * @var int
+     */
     protected $statusCode;
 
     public function __construct(RequestInterface $request, $data, $statusCode = 200)
@@ -32,6 +39,9 @@ class RestResponse implements ResponseInterface
         $this->statusCode = $statusCode;
     }
 
+    /**
+     * @return bool
+     */
     public function isSuccessful()
     {
         $code = $this->getCode();
@@ -39,6 +49,9 @@ class RestResponse implements ResponseInterface
         && $code && $code < 400;
     }
 
+    /**
+     * @return RequestInterface
+     */
     public function getRequest()
     {
         return $this->request;
@@ -60,5 +73,21 @@ class RestResponse implements ResponseInterface
     public function getCode()
     {
         return $this->statusCode;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getErrorCode()
+    {
+        return isset($this->data['errorCode']) ? (int) $this->data['errorCode'] : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage()
+    {
+        return '';
     }
 }

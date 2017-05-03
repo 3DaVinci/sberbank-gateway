@@ -27,42 +27,80 @@ class RestGatewayTest extends SberbankTestCase
         ];
         $this->gateway = new RestGateway(
             $params,
-            $this->setMockSberbankClient(['RegisterOrderSuccess', 'RegisterOrderError'])
+            $this->setMockSberbankClient([
+                'RegisterOrderSuccess',
+                'RegisterOrderError',
+                'OrderStatusSuccess',
+                'OrderStatusError'
+            ])
         );
     }
 
-    public function testRegisterOrderSuccess()
+    public function testRegisterOrderRequestSuccess()
     {
-        /** @var \Sberbank\Message\RegisterOrder $registerOrderRequest */
-        $registerOrderRequest = $this->gateway->registerOrder([
+        /** @var \Sberbank\Message\RegisterOrderRequest $request */
+        $request = $this->gateway->registerOrder([
             'orderNumber' => 1,
             'amount' => 12000,
             'returnUrl' => 'https://server/applicaton_context/finish.html'
         ]);
 
-        $registerOrderRequest->validate();
+        $request->validate();
 
         /** @var \Sberbank\Message\RestResponse $response */
-        $response = $registerOrderRequest->send();
+        $response = $request->send();
 
         $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
         $this->assertNotEmpty($response->getData());
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testRegisterOrderError()
+    public function testRegisterOrderRequestError()
     {
-        /** @var \Sberbank\Message\RegisterOrder $registerOrderRequest */
-        $registerOrderRequest = $this->gateway->registerOrder([
+        /** @var \Sberbank\Message\RegisterOrderRequest $request */
+        $request = $this->gateway->registerOrder([
             'orderNumber' => 1,
             'returnUrl' => 'https://server/applicaton_context/finish.html'
         ]);
 
         $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
-        $registerOrderRequest->validate();
+        $request->validate();
 
         /** @var \Sberbank\Message\RestResponse $response */
-        $response = $registerOrderRequest->send();
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertFalse($response->isSuccessful());
+    }
+
+    public function testOrderStatusSuccess()
+    {
+        /** @var \Sberbank\Message\OrderStatusRequest $request */
+        $request = $this->gateway->orderStatus([
+            'orderId' => 'b8d70aa7-bfb3-4f94-b7bb-aec7273e1fce'
+        ]);
+
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testOrderStatusError()
+    {
+        /** @var \Sberbank\Message\OrderStatusRequest $request */
+        $request = $this->gateway->orderStatus();
+
+        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
 
         $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
         $this->assertNotEmpty($response->getData());

@@ -54,6 +54,7 @@ class RequestAbstractTest extends TestCase
 
     public function testGetUrl()
     {
+        $this->request->shouldReceive('getMethodName')->andReturn('foo');
         $url = $this->request->getUrl();
         $this->assertTrue(is_string($url));
         $this->assertNotEmpty($url);

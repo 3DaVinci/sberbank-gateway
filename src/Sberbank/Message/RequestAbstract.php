@@ -11,10 +11,14 @@ use Sberbank\Http\Client;
 use Sberbank\Exception\InvalidRequestException;
 use Sberbank\Exception\RuntimeException;
 
+/**
+ * Class RequestAbstract
+ * @package Sberbank\Message
+ */
 abstract class RequestAbstract implements RequestInterface
 {
     protected $liveUrl = 'http://62.76.205.3/payment/rest/';
-    protected $testUrl = 'http://95.128.178.93/payment/rest/';
+    protected $testUrl = 'https://3dsec.sberbank.ru/payment/rest/';
 
     /**
      * The request parameters
@@ -31,13 +35,26 @@ abstract class RequestAbstract implements RequestInterface
     protected $response;
 
     /**
+     * @var string
+     */
+    protected $responseClassName;
+
+    /**
      * @var Client
      */
     protected $sberbankClient;
 
-    public function __construct($sberbankClient)
+    abstract public function getMethodName();
+
+    /**
+     * RequestAbstract constructor.
+     * @param $sberbankClient
+     * @param string $responseClassName
+     */
+    public function __construct(Client $sberbankClient, $responseClassName = '\Sberbank\Message\RestResponse')
     {
         $this->sberbankClient = $sberbankClient;
+        $this->responseClassName = $responseClassName;
     }
 
     /**
@@ -53,7 +70,9 @@ abstract class RequestAbstract implements RequestInterface
      */
     protected function getUrl()
     {
-        return false === $this->getTestMode() ? $this->liveUrl : $this->testUrl;
+        $url = (false === $this->getTestMode()) ? $this->liveUrl : $this->testUrl;
+
+        return $url . $this->getMethodName();
     }
 
     public function setPassword($value)
@@ -63,7 +82,7 @@ abstract class RequestAbstract implements RequestInterface
 
     /**
      * @param $value
-     * @return AbstractRequest
+     * @return RequestAbstract
      */
     public function setUserName($value)
     {
@@ -80,7 +99,7 @@ abstract class RequestAbstract implements RequestInterface
 
     /**
      * @param bool $value
-     * @return AbstractRequest
+     * @return RequestAbstract
      */
     public function setTestMode(bool $value)
     {
@@ -113,7 +132,7 @@ abstract class RequestAbstract implements RequestInterface
      *
      * @param string $key
      * @param mixed $value
-     * @return AbstractRequest
+     * @return RequestAbstract
      */
     protected function setParameter(string $key, $value)
     {
@@ -156,5 +175,20 @@ abstract class RequestAbstract implements RequestInterface
         }
 
         return $this;
+    }
+
+    public function send()
+    {
+        /** @var \Psr\Http\Message\ResponseInterface $httpResponse */
+        $httpResponse = $this->sberbankClient->get(
+            $this->getUrl() . '?' . http_build_query($this->getParameters()),
+            ['Content-type' => 'application/json']
+        );
+
+        $body = $httpResponse->getBody(true);
+        $jsonToArrayResponse = !empty($body) ? json_decode((string) $body, true) : [];
+        $responseClassName = $this->responseClassName;
+
+        return $this->response = new $responseClassName($this, $jsonToArrayResponse, $httpResponse->getStatusCode());
     }
 }

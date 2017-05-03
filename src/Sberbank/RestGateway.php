@@ -38,9 +38,18 @@ class RestGateway implements GatewayInterface
      * @param array $parameters
      * @return RequestAbstract
      */
+    public function orderStatus(array $parameters = [])
+    {
+        return $this->createRequest('OrderStatus', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return RequestAbstract
+     */
     public function registerOrder(array $parameters = [])
     {
-        return $this->createRequest('\Sberbank\Message\RegisterOrder', $parameters);
+        return $this->createRequest('RegisterOrder', $parameters);
     }
 
     /**
@@ -64,13 +73,16 @@ class RestGateway implements GatewayInterface
     }
 
     /**
-     * @param string $class
+     * @param string $classNmae
      * @param array $parameters
      * @return RequestAbstract
      */
-    private function createRequest(string $class, array $parameters) : RequestAbstract
+    private function createRequest(string $classNmae, array $parameters) : RequestAbstract
     {
-        $requestObj = new $class($this->httpClient);
+        $classRequest = '\Sberbank\Message\\'.$classNmae.'Request';
+        $classResponse = '\Sberbank\Message\\'.$classNmae.'Response';
+        /** @var \Sberbank\Message\RequestAbstract $requestObj */
+        $requestObj = new $classRequest($this->httpClient, $classResponse);
 
         return $requestObj->initialize(array_replace($this->getParameters(), $parameters));
     }

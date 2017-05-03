@@ -30,7 +30,6 @@ class Client implements HttpClient, RequestFactory
 
     public function __construct(HttpClient $httpClient = null)
     {
-        // \Http\Adapter\Guzzle6\Client
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->requestFactory = MessageFactoryDiscovery::find();
     }

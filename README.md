@@ -9,7 +9,7 @@
 
 ```php
 
-$gateway = \Sberbank\RestGateway([
+$gateway = new \Sberbank\RestGateway([
     'password' => 'password',
     'userName' => 'username'
 ]);

@@ -9,14 +9,15 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Message\RegisterOrderRequest;
 
-class RegisterOrderTest extends TestCase
+class RegisterOrderRequestTest extends TestCase
 {
     private $request;
 
     public function setUp()
     {
-        $this->request = Mockery::mock('\Sberbank\Message\RegisterOrder')->makePartial();
+        $this->request = Mockery::mock('\Sberbank\Message\RegisterOrderRequest')->makePartial();
     }
 
     public function testOrderNumber()
@@ -40,17 +41,33 @@ class RegisterOrderTest extends TestCase
         $this->assertEquals('https://server/applicaton_context/finish.html', $returnUrl);
     }
 
+    public function testPageView()
+    {
+        $this->assertSame($this->request, $this->request->setPageView(RegisterOrderRequest::PAGE_VIEW_MOBILE));
+        $pageView = $this->request->getParameter('pageView');
+        $this->assertEquals(RegisterOrderRequest::PAGE_VIEW_MOBILE, $pageView);
+    }
+
     public function testValidate()
     {
         $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
-        $this->request->validate();
-
         $this->request
             ->setPassword('123456')
-            ->setUserName('user_name')
+            ->setUserName('user_name');
+        $this->request->validate();
+
+        // Not Exception
+        $this->request
             ->setOrderNumber('112')
             ->setAmount(12000)
             ->setReturnUrl('https://server/applicaton_context/finish.html');
         $this->request->validate();
+    }
+
+    public function testGetMethodName()
+    {
+        $method = $this->request->getMethodName();
+        $this->assertTrue(is_string($method));
+        $this->assertNotEmpty($method);
     }
 }

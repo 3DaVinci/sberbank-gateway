@@ -7,6 +7,10 @@
 
 namespace Sberbank\Message;
 
+/**
+ * Interface RequestInterface
+ * @package Sberbank\Message
+ */
 interface RequestInterface
 {
     /**

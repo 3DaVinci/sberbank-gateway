@@ -58,6 +58,24 @@ class RestResponseTest extends TestCase
         $this->assertFalse($this->response->isSuccessful());
     }
 
+    public function testGetErrorCode()
+    {
+        $code = $this->response->getErrorCode();
+        $this->assertTrue(is_null($code));
+
+        $request = $this->getMockRequest();
+        $data = ['errorCode' => 10];
+        $this->response = Mockery::mock('\Sberbank\Message\RestResponse', [$request, $data])->makePartial();
+        $code = $this->response->getErrorCode();
+        $this->assertEquals(10, $code);
+    }
+
+    public function testGetErrorMessage()
+    {
+        $message = $this->response->getErrorMessage();
+        $this->assertTrue(is_string($message));
+    }
+
     public function testDefaultMethods()
     {
         $this->assertNull($this->response->getData());
