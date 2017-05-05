@@ -45,8 +45,10 @@ class RestResponse implements ResponseInterface
     public function isSuccessful()
     {
         $code = $this->getCode();
+
         return (!isset($this->data['errorCode']) || $this->data['errorCode'] == 0)
-        && $code && $code < 400;
+            && (!isset($this->data['ErrorCode']) || $this->data['ErrorCode'] == 0)
+            && $code && $code < 400;
     }
 
     /**
@@ -80,7 +82,17 @@ class RestResponse implements ResponseInterface
      */
     public function getErrorCode()
     {
-        return isset($this->data['errorCode']) ? (int) $this->data['errorCode'] : null;
+        if (isset($this->data['errorCode'])) {
+
+            return $this->data['errorCode'];
+        }
+        if (isset($this->data['ErrorCode'])) {
+
+            return $this->data['ErrorCode'];
+        }
+
+        return null;
+
     }
 
     /**
@@ -88,6 +100,29 @@ class RestResponse implements ResponseInterface
      */
     public function getErrorMessage()
     {
+        if (isset($this->data['errorMessage'])) {
+
+            return $this->data['errorMessage'];
+        }
+        if (isset($this->data['ErrorMessage'])) {
+
+            return $this->data['ErrorMessage'];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessageByCode()
+    {
+        if (isset($this->errorMessages)) {
+            $code = $this->getErrorCode();
+
+            return $this->errorMessages[$code] ?? '';
+        }
+
         return '';
     }
 }

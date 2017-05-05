@@ -75,16 +75,24 @@ abstract class RequestAbstract implements RequestInterface
         return $url . $this->getMethodName();
     }
 
-    public function setPassword($value)
+    /**
+     * Пароль магазина, полученный при подключении
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setPassword(string $value)
     {
         return $this->setParameter('password', $value);
     }
 
     /**
-     * @param $value
+     * Логин магазина, полученный при подключении
+     *
+     * @param string $value
      * @return RequestAbstract
      */
-    public function setUserName($value)
+    public function setUserName(string $value)
     {
         return $this->setParameter('userName', $value);
     }
@@ -185,7 +193,7 @@ abstract class RequestAbstract implements RequestInterface
             ['Content-type' => 'application/json']
         );
 
-        $body = $httpResponse->getBody(true);
+        $body = $httpResponse->getBody();
         $jsonToArrayResponse = !empty($body) ? json_decode((string) $body, true) : [];
         $responseClassName = $this->responseClassName;
 

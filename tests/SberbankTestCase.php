@@ -46,7 +46,19 @@ class SberbankTestCase extends TestCase
         );
     }
 
-    private function buildResponse($mockFile)
+    /**
+     * @return Mockery\MockInterface
+     */
+    protected function getMockRequest()
+    {
+        return Mockery::mock('\Sberbank\Message\RequestInterface');
+    }
+
+    /**
+     * @param string $mockFile
+     * @return string
+     */
+    protected function getMockContent($mockFile)
     {
         $body = '';
         $file = __DIR__.'/Mock/'.$mockFile.'.json';
@@ -54,6 +66,26 @@ class SberbankTestCase extends TestCase
             $body = file_get_contents($file);
         }
 
-        return new Response(200, [], $body);
+        return $body;
+    }
+
+    /**
+     * @param string $mockFile
+     * @return array|mixed
+     */
+    protected function getMockAsArray($mockFile)
+    {
+        $json = $this->getMockContent($mockFile);
+
+        return $json ? json_decode($json, true) : [];
+    }
+
+    /**
+     * @param string $mockFile
+     * @return Response
+     */
+    private function buildResponse($mockFile)
+    {
+        return new Response(200, [], $this->getMockContent($mockFile));
     }
 }

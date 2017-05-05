@@ -35,6 +35,8 @@ class RestGateway implements GatewayInterface
     }
 
     /**
+     * Запрос состояния заказа
+     *
      * @param array $parameters
      * @return RequestAbstract
      */
@@ -44,12 +46,25 @@ class RestGateway implements GatewayInterface
     }
 
     /**
+     * Запрос регистрации заказа
+     *
      * @param array $parameters
      * @return RequestAbstract
      */
     public function registerOrder(array $parameters = [])
     {
         return $this->createRequest('RegisterOrder', $parameters);
+    }
+
+    /**
+     * Запрос списка связок по идентификатору клиента
+     *
+     * @param string $clientId
+     * @return RequestAbstract
+     */
+    public function getBindings($clientId)
+    {
+        return $this->createRequest('Bindings', ['clientId' => $clientId]);
     }
 
     /**

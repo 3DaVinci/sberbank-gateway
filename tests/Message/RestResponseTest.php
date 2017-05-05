@@ -7,11 +7,14 @@
 
 namespace Sberbank\Tests\Message;
 
-use PHPUnit\Framework\TestCase;
+use Sberbank\Tests\SberbankTestCase;
 use Mockery;
 
-class RestResponseTest extends TestCase
+class RestResponseTest extends SberbankTestCase
 {
+    /**
+     * @var \Sberbank\Message\RestResponse
+     */
     private $response;
 
     public function setUp()
@@ -82,10 +85,5 @@ class RestResponseTest extends TestCase
         $this->assertNull($this->response->getCode());
         $this->assertNull($this->response->getRequest());
         $this->assertFalse($this->response->isSuccessful());
-    }
-
-    private function getMockRequest()
-    {
-        return Mockery::mock('\Sberbank\Message\RequestInterface');
     }
 }

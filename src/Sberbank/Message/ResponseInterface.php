@@ -52,4 +52,11 @@ interface ResponseInterface
      * @return string
      */
     public function getErrorMessage();
+
+    /**
+     * Sberbank error message by code
+     *
+     * @return string
+     */
+    public function getErrorMessageByCode();
 }
