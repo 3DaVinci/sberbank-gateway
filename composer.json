@@ -1,7 +1,7 @@
 {
-    "name": "3davinci/sberbank",
+    "name": "b2b/sberbank-gateway",
     "version": "0.1.1",
-    "description": "Sberbank client",
+    "description": "Sberbank REST client",
     "type": "library",
     "license": "proprietary",
     "authors": [
