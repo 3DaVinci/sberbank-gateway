@@ -138,4 +138,63 @@ class RestGatewayTest extends SberbankTestCase
         $this->assertNotEmpty($response->getData());
         $this->assertFalse($response->isSuccessful());
     }
+
+    public function testBindCardSuccess()
+    {
+        $this->setGateway('BindCardSuccess');
+        /** @var \Sberbank\Message\BindCardRequestRequest $request */
+        $request = $this->gateway->getBindCard('9cead45e-19c4-4102-9940-37678888bac4');
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testBindCardError()
+    {
+        $this->setGateway('BindCardError');
+        /** @var \Sberbank\Message\BindingsRequest $request */
+        $request = $this->gateway->getBindCard('9cead45e-19c4-4102-9940-37678888bac4');
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertFalse($response->isSuccessful());
+    }
+    public function testUnbindCardSuccess()
+    {
+        $this->setGateway('UnbindCardSuccess');
+        /** @var \Sberbank\Message\BindCardRequestRequest $request */
+        $request = $this->gateway->getUnbindCard('9cead45e-19c4-4102-9940-37678888bac4');
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testUnbindCardError()
+    {
+        $this->setGateway('UnbindCardError');
+        /** @var \Sberbank\Message\BindingsRequest $request */
+        $request = $this->gateway->getUnbindCard('9cead45e-19c4-4102-9940-37678888bac4');
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertFalse($response->isSuccessful());
+    }
 }

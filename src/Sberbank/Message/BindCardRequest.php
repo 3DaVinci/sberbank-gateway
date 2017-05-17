@@ -2,24 +2,26 @@
 /**
  * Author: Andrey Morozov
  * Email: andrey@3davinci.ru
- * Date: 03.05.2017
+ * Date: 17.05.2017
  */
 
 namespace Sberbank\Message;
 
 /**
- * Class OrderStatusRequest
+ * Class BindCardRequest
  * @package Sberbank\Message
  */
-class OrderStatusRequest extends RequestAbstract
+class BindCardRequest extends RequestAbstract
 {
     /**
-     * @param string|int $value
+     * Идентификатор связки, созданной ранее.
+     *
+     * @param string $value
      * @return RequestAbstract
      */
-    public function setOrderId($value)
+    public function setBindingId(string $value)
     {
-        return $this->setParameter('orderId', $value);
+        return $this->setParameter('bindingId', $value);
     }
 
     /**
@@ -27,7 +29,7 @@ class OrderStatusRequest extends RequestAbstract
      */
     public function validate()
     {
-        parent::validate('orderId');
+        parent::validate('bindingId');
     }
 
     /**
@@ -35,6 +37,6 @@ class OrderStatusRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'getOrderStatus.do';
+        return 'bindCard.do';
     }
 }

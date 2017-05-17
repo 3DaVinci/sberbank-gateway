@@ -2,7 +2,7 @@
 /**
  * Author: Andrey Morozov
  * Email: andrey@3davinci.ru
- * Date: 05.05.2017
+ * Date: 17.05.2017
  */
 
 namespace Sberbank\Tests\Message;
@@ -10,20 +10,20 @@ namespace Sberbank\Tests\Message;
 use PHPUnit\Framework\TestCase;
 use Mockery;
 
-class BindingsRequestTest extends TestCase
+class BindCardRequestTest extends TestCase
 {
     private $request;
 
     public function setUp()
     {
-        $this->request = Mockery::mock('\Sberbank\Message\BindingsRequest')->makePartial();
+        $this->request = Mockery::mock('\Sberbank\Message\BindCardRequest')->makePartial();
     }
 
     public function testClientId()
     {
-        $this->assertSame($this->request, $this->request->setClientId('18547'));
-        $result = $this->request->getParameter('clientId');
-        $this->assertEquals('18547', $result);
+        $this->assertSame($this->request, $this->request->setBindingId('9cead45e-19c4-4102-9940-37678888bac4'));
+        $result = $this->request->getParameter('bindingId');
+        $this->assertEquals('9cead45e-19c4-4102-9940-37678888bac4', $result);
     }
 
     public function testValidate()
@@ -35,7 +35,7 @@ class BindingsRequestTest extends TestCase
         $this->request->validate();
 
         // Not Exception
-        $this->request->setClientId('18547');
+        $this->request->setBindingId('9cead45e-19c4-4102-9940-37678888bac4');
         $this->request->validate();
     }
 

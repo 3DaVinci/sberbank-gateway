@@ -68,6 +68,28 @@ class RestGateway implements GatewayInterface
     }
 
     /**
+     * Запрос активации связки
+     *
+     * @param string $bindingId
+     * @return RequestAbstract
+     */
+    public function getBindCard($bindingId)
+    {
+        return $this->createRequest('BindCard', ['bindingId' => $bindingId]);
+    }
+
+    /**
+     * Запрос деактивации связки
+     *
+     * @param string $bindingId
+     * @return RequestAbstract
+     */
+    public function getUnbindCard($bindingId)
+    {
+        return $this->createRequest('UnbindCard', ['bindingId' => $bindingId]);
+    }
+
+    /**
      * @return array
      */
     public function getParameters() : array

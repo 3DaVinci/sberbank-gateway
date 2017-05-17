@@ -47,7 +47,6 @@ class RestResponse implements ResponseInterface
         $code = $this->getCode();
 
         return (!isset($this->data['errorCode']) || $this->data['errorCode'] == 0)
-            && (!isset($this->data['ErrorCode']) || $this->data['ErrorCode'] == 0)
             && $code && $code < 400;
     }
 
