@@ -1,5 +1,7 @@
 # Библиотека для работы с платежным шлюзом Сбербанка. Интерфейс REST.
 
+[![Build Status](https://api.travis-ci.org/3DaVinci/sberbank-gateway.png?branch=master)](https://travis-ci.org/3DaVinci/sberbank-gateway)
+
 ## Установка
 
     $ curl -s http://getcomposer.org/installer | php
