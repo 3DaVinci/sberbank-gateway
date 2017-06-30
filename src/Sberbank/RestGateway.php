@@ -57,6 +57,28 @@ class RestGateway implements GatewayInterface
     }
 
     /**
+     * Запрос отмены оплаты заказа
+     *
+     * @param array $parameters
+     * @return RequestAbstract
+     */
+    public function paymentCancellation(array $parameters = [])
+    {
+        return $this->createRequest('PaymentCancellation', $parameters);
+    }
+
+    /**
+     * Запрос возврата средств оплаты заказа
+     *
+     * @param array $parameters
+     * @return RequestAbstract
+     */
+    public function refund(array $parameters = [])
+    {
+        return $this->createRequest('Refund', $parameters);
+    }
+
+    /**
      * Запрос списка связок по идентификатору клиента
      *
      * @param string $clientId

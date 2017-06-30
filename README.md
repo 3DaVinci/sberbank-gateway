@@ -1,13 +1,24 @@
-# Библиотека для подключения  интернет-магазина к платежному шлюзу Сбербанка
+# Библиотека для работы с платежным шлюзом Сбербанка. Интерфейс REST.
 
 ## Установка
 
     $ curl -s http://getcomposer.org/installer | php
     $ php composer.phar update
 
-## Использование
+## Возможности
+
+ - registerOrder - запрос регистрации заказа
+ - orderStatus - запрос состояния заказа
+ - paymentCancellation - запрос отмены оплаты заказа
+ - refund - запрос возврата средств оплаты заказа
+ - getBindings - запрос списка связок по идентификатору клиента
+ - getBindCard - запрос активации связки
+ - getUnbindCard - запрос деактивации связки
+
+## Пример использования
 
 ```php
+<?php
 
 $gateway = new \Sberbank\RestGateway([
     'password' => 'password',

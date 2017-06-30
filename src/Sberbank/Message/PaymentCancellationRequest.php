@@ -2,18 +2,20 @@
 /**
  * Author: Andrey Morozov
  * Email: andrey@3davinci.ru
- * Date: 03.05.2017
+ * Date: 30.05.2017
  */
 
 namespace Sberbank\Message;
 
 /**
- * Class OrderStatusRequest
+ * Class PaymentCancellationRequest
  * @package Sberbank\Message
  */
-class OrderStatusRequest extends RequestAbstract
+class PaymentCancellationRequest extends RequestAbstract
 {
     /**
+     * Номер заказа в платежной системе. Уникален в пределах системы.
+     *
      * @param string $value
      * @return RequestAbstract
      */
@@ -35,6 +37,6 @@ class OrderStatusRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'getOrderStatus.do';
+        return 'reverse.do';
     }
 }

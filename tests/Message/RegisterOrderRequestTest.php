@@ -62,6 +62,27 @@ class RegisterOrderRequestTest extends TestCase
         $this->assertEquals('18547', $result);
     }
 
+    public function testCurrency()
+    {
+        $this->assertSame($this->request, $this->request->setCurrency('RUS'));
+        $result = $this->request->getParameter('currency');
+        $this->assertEquals('RUS', $result);
+    }
+
+    public function testLanguage()
+    {
+        $this->assertSame($this->request, $this->request->setLanguage('RU'));
+        $result = $this->request->getParameter('language');
+        $this->assertEquals('RU', $result);
+    }
+
+    public function testMerchantLogin()
+    {
+        $this->assertSame($this->request, $this->request->setMerchantLogin('login name'));
+        $result = $this->request->getParameter('merchantLogin');
+        $this->assertEquals('login name', $result);
+    }
+
     public function testBindingId()
     {
         $this->assertSame($this->request, $this->request->setBindingId('e09c8c1d-9d1a-4c39-a9d3-123c6075429c'));

@@ -1,9 +1,9 @@
 {
-    "name": "b2b/sberbank-gateway",
-    "version": "0.1.2",
+    "name": "3DaVinci/sberbank-gateway",
+    "version": "0.1.4",
     "description": "Sberbank REST client",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Andrey Morozov",

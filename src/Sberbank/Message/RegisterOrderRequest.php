@@ -108,6 +108,39 @@ class RegisterOrderRequest extends RequestAbstract
     }
 
     /**
+     * Код валюты платежа ISO 4217. Если не указан, считается равным коду валюты по умолчанию.
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setCurrency(string $value)
+    {
+        return $this->setParameter('currency', $value);
+    }
+
+    /**
+     * Язык в кодировке ISO 639-1. Если не указан, будет использован язык, указанный в настройках магазина как язык по умолчанию (default language).
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setLanguage(string $value)
+    {
+        return $this->setParameter('language', $value);
+    }
+
+    /**
+     * Чтобы зарегистрировать заказ от имени дочернего мерчанта, укажите его логин в этом параметре.
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setMerchantLogin(string $value)
+    {
+        return $this->setParameter('merchantLogin', $value);
+    }
+
+    /**
      * Идентификатор связки, созданной ранее. Может использоваться, только если у магазина есть разрешение на работу со связками.
      * Если этот параметр передаётся в данном запросе, то это означает:
      *  1. Данный заказ может быть оплачен только с помощью связки;

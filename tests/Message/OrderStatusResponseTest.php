@@ -7,7 +7,6 @@
 
 namespace Sberbank\Tests\Message;
 
-use Mockery;
 use Sberbank\Message\OrderStatusResponse;
 use Sberbank\Tests\SberbankTestCase;
 

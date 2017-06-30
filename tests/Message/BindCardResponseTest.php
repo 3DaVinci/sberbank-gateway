@@ -7,7 +7,6 @@
 
 namespace Sberbank\Tests\Message;
 
-use Mockery;
 use Sberbank\Message\BindCardResponse;
 use Sberbank\Tests\SberbankTestCase;
 

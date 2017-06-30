@@ -109,6 +109,77 @@ class RestGatewayTest extends SberbankTestCase
         $this->assertFalse($response->isSuccessful());
     }
 
+    public function testPaymentCancellationSuccess()
+    {
+        $this->setGateway('PaymentCancellationSuccess');
+        /** @var \Sberbank\Message\PaymentCancellationRequest $request */
+        $request = $this->gateway->paymentCancellation([
+            'orderId' => 'b8d70aa7-bfb3-4f94-b7bb-aec7273e1fce'
+        ]);
+
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testPaymentCancellationError()
+    {
+        $this->setGateway('PaymentCancellationError');
+        /** @var \Sberbank\Message\PaymentCancellationRequest $request */
+        $request = $this->gateway->paymentCancellation();
+
+        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertFalse($response->isSuccessful());
+    }
+
+    public function testRefundSuccess()
+    {
+        $this->setGateway('RefundSuccess');
+        /** @var \Sberbank\Message\RefundRequest $request */
+        $request = $this->gateway->refund([
+            'orderId' => 'b8d70aa7-bfb3-4f94-b7bb-aec7273e1fce',
+            'amount' => 120000
+        ]);
+
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testRefundError()
+    {
+        $this->setGateway('RefundError');
+        /** @var \Sberbank\Message\RefundRequest $request */
+        $request = $this->gateway->refund();
+
+        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $request->validate();
+
+        /** @var \Sberbank\Message\RestResponse $response */
+        $response = $request->send();
+
+        $this->assertInstanceOf('\Sberbank\Message\RestResponse', $response);
+        $this->assertNotEmpty($response->getData());
+        $this->assertFalse($response->isSuccessful());
+    }
+
     public function testBindingsSuccess()
     {
         $this->setGateway('BindingsSuccess');
@@ -142,7 +213,7 @@ class RestGatewayTest extends SberbankTestCase
     public function testBindCardSuccess()
     {
         $this->setGateway('BindCardSuccess');
-        /** @var \Sberbank\Message\BindCardRequestRequest $request */
+        /** @var \Sberbank\Message\BindCardRequest $request */
         $request = $this->gateway->getBindCard('9cead45e-19c4-4102-9940-37678888bac4');
         $request->validate();
 
@@ -171,7 +242,7 @@ class RestGatewayTest extends SberbankTestCase
     public function testUnbindCardSuccess()
     {
         $this->setGateway('UnbindCardSuccess');
-        /** @var \Sberbank\Message\BindCardRequestRequest $request */
+        /** @var \Sberbank\Message\BindCardRequest $request */
         $request = $this->gateway->getUnbindCard('9cead45e-19c4-4102-9940-37678888bac4');
         $request->validate();
 

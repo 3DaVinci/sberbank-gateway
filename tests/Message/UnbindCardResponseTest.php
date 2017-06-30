@@ -7,7 +7,6 @@
 
 namespace Sberbank\Tests\Message;
 
-use Mockery;
 use Sberbank\Message\UnbindCardResponse;
 use Sberbank\Tests\SberbankTestCase;
 
