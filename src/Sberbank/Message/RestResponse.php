@@ -45,9 +45,9 @@ class RestResponse implements ResponseInterface
     public function isSuccessful()
     {
         $code = $this->getCode();
+        $errorCode = $this->getErrorCode();
 
-        return (!isset($this->data['errorCode']) || $this->data['errorCode'] == 0)
-            && $code && $code < 400;
+        return (!$errorCode || $errorCode == 0) && $code && $code < 400;
     }
 
     /**
@@ -83,11 +83,11 @@ class RestResponse implements ResponseInterface
     {
         if (isset($this->data['errorCode'])) {
 
-            return $this->data['errorCode'];
+            return (int) $this->data['errorCode'];
         }
         if (isset($this->data['ErrorCode'])) {
 
-            return $this->data['ErrorCode'];
+            return (int) $this->data['ErrorCode'];
         }
 
         return null;
