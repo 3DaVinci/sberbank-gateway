@@ -166,6 +166,28 @@ class RegisterOrderRequest extends RequestAbstract
     }
 
     /**
+     * Номер телефона клиента. Может быть следующего формата: ^((+7|7|8)?([0-9]){10})$.
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setPhone(string $value)
+    {
+        return $this->setParameter('phone', $value);
+    }
+
+    /**
+     * Адрес электронной почты покупателя.
+     *
+     * @param string $value
+     * @return RequestAbstract
+     */
+    public function setEmail(string $value)
+    {
+        return $this->setParameter('email', $value);
+    }
+
+    /**
      * @throws \Sberbank\Exception\InvalidRequestException
      */
     public function validate()
