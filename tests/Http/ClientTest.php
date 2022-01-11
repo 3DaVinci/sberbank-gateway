@@ -16,7 +16,7 @@ class ClientTest extends TestCase
     {
         $client = Mockery::mock('\Sberbank\Http\Client')->makePartial();
         $client->__construct();
-        $this->assertAttributeInstanceOf('\Http\Client\HttpClient', 'httpClient', $client);
-        $this->assertAttributeInstanceOf('\Http\Message\RequestFactory', 'requestFactory', $client);
+        $this->assertInstanceOf('\Http\Client\HttpClient', $client->getHttpClient());
+        $this->assertInstanceOf('\Http\Message\RequestFactory', $client->getRequestFactory());
     }
 }

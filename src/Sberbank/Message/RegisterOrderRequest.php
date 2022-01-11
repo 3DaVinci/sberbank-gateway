@@ -7,6 +7,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Exception\InvalidRequestException;
+
 /**
  * Class RegisterOrderRequest
  * @package Sberbank\Message
@@ -22,7 +24,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string|int $value
      * @return RequestAbstract
      */
-    public function setOrderNumber($value)
+    public function setOrderNumber($value): RequestAbstract
     {
         return $this->setParameter('orderNumber', $value);
     }
@@ -33,7 +35,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param int $value
      * @return RequestAbstract
      */
-    public function setAmount(int $value)
+    public function setAmount(int $value): RequestAbstract
     {
         return $this->setParameter('amount', $value);
     }
@@ -46,7 +48,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setReturnUrl(string $value)
+    public function setReturnUrl(string $value): RequestAbstract
     {
         return $this->setParameter('returnUrl', $value);
     }
@@ -59,7 +61,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setFailUrl(string $value)
+    public function setFailUrl(string $value): RequestAbstract
     {
         return $this->setParameter('failUrl', $value);
     }
@@ -77,7 +79,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setPageView(string $value)
+    public function setPageView(string $value): RequestAbstract
     {
         return $this->setParameter('pageView', $value);
     }
@@ -90,7 +92,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param int $value
      * @return RequestAbstract
      */
-    public function setSessionTimeoutSecs(int $value)
+    public function setSessionTimeoutSecs(int $value): RequestAbstract
     {
         return $this->setParameter('sessionTimeoutSecs', $value);
     }
@@ -102,7 +104,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setClientId(string $value)
+    public function setClientId(string $value): RequestAbstract
     {
         return $this->setParameter('clientId', $value);
     }
@@ -113,7 +115,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setCurrency(string $value)
+    public function setCurrency(string $value): RequestAbstract
     {
         return $this->setParameter('currency', $value);
     }
@@ -124,7 +126,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setLanguage(string $value)
+    public function setLanguage(string $value): RequestAbstract
     {
         return $this->setParameter('language', $value);
     }
@@ -135,7 +137,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setMerchantLogin(string $value)
+    public function setMerchantLogin(string $value): RequestAbstract
     {
         return $this->setParameter('merchantLogin', $value);
     }
@@ -149,7 +151,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setBindingId(string $value)
+    public function setBindingId(string $value): RequestAbstract
     {
         return $this->setParameter('bindingId', $value);
     }
@@ -160,7 +162,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setDescription(string $value)
+    public function setDescription(string $value): RequestAbstract
     {
         return $this->setParameter('description', mb_substr($value, 0, 512));
     }
@@ -171,7 +173,7 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setPhone(string $value)
+    public function setPhone(string $value): RequestAbstract
     {
         return $this->setParameter('phone', $value);
     }
@@ -182,13 +184,13 @@ class RegisterOrderRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setEmail(string $value)
+    public function setEmail(string $value): RequestAbstract
     {
         return $this->setParameter('email', $value);
     }
 
     /**
-     * @throws \Sberbank\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function validate()
     {
@@ -198,7 +200,7 @@ class RegisterOrderRequest extends RequestAbstract
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return 'register.do';
     }

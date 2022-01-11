@@ -9,12 +9,13 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Exception\InvalidRequestException;
 
 class UnbindCardRequestTest extends TestCase
 {
-    private $request;
+    private Mockery\MockInterface $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = Mockery::mock('\Sberbank\Message\UnbindCardRequest')->makePartial();
     }
@@ -28,7 +29,7 @@ class UnbindCardRequestTest extends TestCase
 
     public function testValidate()
     {
-        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $this->expectException(InvalidRequestException::class);
         $this->request
             ->setPassword('123456')
             ->setUserName('user_name');

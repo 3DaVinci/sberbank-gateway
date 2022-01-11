@@ -13,7 +13,7 @@ namespace Sberbank\Message;
  */
 class OrderStatusResponse extends RestResponse
 {
-    protected $errorMessages = [
+    protected array $errorMessages = [
         0 => 'Обработка запроса прошла без системных ошибок',
         2 => 'Заказ отклонен по причине ошибки в реквизитах платежа',
         5 => 'Доступ запрещён',
@@ -21,7 +21,7 @@ class OrderStatusResponse extends RestResponse
         7 => 'Системная ошибка',
     ];
 
-    private $statuses = [
+    private array $statuses = [
         0 => 'Заказ зарегистрирован, но не оплачен',
         1 => 'Предавторизованная сумма захолдирована (для двухстадийных платежей)',
         2 => 'Проведена полная авторизация суммы заказа',
@@ -34,7 +34,7 @@ class OrderStatusResponse extends RestResponse
     /**
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         $statusCode = $this->data['OrderStatus'] ?? null;
 

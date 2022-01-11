@@ -16,9 +16,9 @@ class RestResponse implements ResponseInterface
     /**
      * The embodied request object.
      *
-     * @var RequestInterface
+     * @var RequestInterface|null
      */
-    protected $request;
+    protected ?RequestInterface $request = null;
 
     /**
      * The data contained in the response.
@@ -28,9 +28,9 @@ class RestResponse implements ResponseInterface
     protected $data;
 
     /**
-     * @var int
+     * @var string|null
      */
-    protected $statusCode;
+    protected ?string $statusCode = null;
 
     public function __construct(RequestInterface $request, $data, $statusCode = 200)
     {
@@ -42,7 +42,7 @@ class RestResponse implements ResponseInterface
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         $code = $this->getCode();
         $errorCode = $this->getErrorCode();
@@ -53,7 +53,7 @@ class RestResponse implements ResponseInterface
     /**
      * @return RequestInterface
      */
-    public function getRequest()
+    public function getRequest(): ?RequestInterface
     {
         return $this->request;
     }
@@ -69,9 +69,9 @@ class RestResponse implements ResponseInterface
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->statusCode;
     }
@@ -79,7 +79,7 @@ class RestResponse implements ResponseInterface
     /**
      * @return int|null
      */
-    public function getErrorCode()
+    public function getErrorCode(): ?int
     {
         if (isset($this->data['errorCode'])) {
 
@@ -97,7 +97,7 @@ class RestResponse implements ResponseInterface
     /**
      * @return string
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         if (isset($this->data['errorMessage'])) {
 
@@ -114,7 +114,7 @@ class RestResponse implements ResponseInterface
     /**
      * @return string
      */
-    public function getErrorMessageByCode()
+    public function getErrorMessageByCode(): string
     {
         if (isset($this->errorMessages)) {
             $code = $this->getErrorCode();

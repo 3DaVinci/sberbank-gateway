@@ -17,41 +17,41 @@ use Sberbank\Exception\RuntimeException;
  */
 abstract class RequestAbstract implements RequestInterface
 {
-    protected $liveUrl = 'https://securepayments.sberbank.ru/payment/rest/';
-    protected $testUrl = 'https://3dsec.sberbank.ru/payment/rest/';
+    protected string $liveUrl = 'https://securepayments.sberbank.ru/payment/rest/';
+    protected string $testUrl = 'https://3dsec.sberbank.ru/payment/rest/';
 
     /**
      * The request parameters
      *
      * @var array
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
     /**
      * An associated ResponseInterface.
      *
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
-    protected $response;
+    protected ?ResponseInterface $response = null;
 
     /**
      * @var string
      */
-    protected $responseClassName;
+    protected string $responseClassName;
 
     /**
      * @var Client
      */
-    protected $sberbankClient;
+    protected Client $sberbankClient;
 
     abstract public function getMethodName();
 
     /**
      * RequestAbstract constructor.
-     * @param $sberbankClient
+     * @param Client $sberbankClient
      * @param string $responseClassName
      */
-    public function __construct(Client $sberbankClient, $responseClassName = '\Sberbank\Message\RestResponse')
+    public function __construct(Client $sberbankClient, string $responseClassName = '\Sberbank\Message\RestResponse')
     {
         $this->sberbankClient = $sberbankClient;
         $this->responseClassName = $responseClassName;
@@ -60,7 +60,7 @@ abstract class RequestAbstract implements RequestInterface
     /**
      * @return ResponseInterface
      */
-    public function getResponse()
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
@@ -68,7 +68,7 @@ abstract class RequestAbstract implements RequestInterface
     /**
      * @return string
      */
-    protected function getUrl()
+    protected function getUrl(): string
     {
         $url = (false === $this->getTestMode()) ? $this->liveUrl : $this->testUrl;
 
@@ -81,7 +81,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param string $value
      * @return RequestAbstract
      */
-    public function setPassword(string $value)
+    public function setPassword(string $value): RequestAbstract
     {
         return $this->setParameter('password', $value);
     }
@@ -92,7 +92,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param string $value
      * @return RequestAbstract
      */
-    public function setUserName(string $value)
+    public function setUserName(string $value): RequestAbstract
     {
         return $this->setParameter('userName', $value);
     }
@@ -100,7 +100,7 @@ abstract class RequestAbstract implements RequestInterface
     /**
      * @return boolean
      */
-    public function getTestMode()
+    public function getTestMode(): ?bool
     {
         return $this->getParameter('testMode');
     }
@@ -109,7 +109,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param bool $value
      * @return RequestAbstract
      */
-    public function setTestMode(bool $value)
+    public function setTestMode(bool $value): RequestAbstract
     {
         return $this->setParameter('testMode', $value);
     }
@@ -119,7 +119,7 @@ abstract class RequestAbstract implements RequestInterface
      *
      * @return array
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
@@ -132,7 +132,7 @@ abstract class RequestAbstract implements RequestInterface
      */
     protected function getParameter(string $key)
     {
-        return isset($this->parameters[$key]) ? $this->parameters[$key] : null;
+        return $this->parameters[$key] ?? null;
     }
 
     /**
@@ -142,7 +142,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param mixed $value
      * @return RequestAbstract
      */
-    protected function setParameter(string $key, $value)
+    protected function setParameter(string $key, $value): RequestAbstract
     {
         if (null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
@@ -173,7 +173,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param array $parameters
      * @return RequestAbstract
      */
-    public function initialize(array $parameters)
+    public function initialize(array $parameters): RequestAbstract
     {
         foreach ($parameters as $key => $value) {
             $method = 'set'.ucfirst($key);
@@ -185,9 +185,8 @@ abstract class RequestAbstract implements RequestInterface
         return $this;
     }
 
-    public function send()
+    public function send(): ResponseInterface
     {
-        /** @var \Psr\Http\Message\ResponseInterface $httpResponse */
         $httpResponse = $this->sberbankClient->get(
             $this->getUrl() . '?' . http_build_query($this->getParameters()),
             ['Content-type' => 'application/json']

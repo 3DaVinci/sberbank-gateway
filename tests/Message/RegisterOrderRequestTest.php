@@ -9,13 +9,14 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Exception\InvalidRequestException;
 use Sberbank\Message\RegisterOrderRequest;
 
 class RegisterOrderRequestTest extends TestCase
 {
-    private $request;
+    private Mockery\MockInterface $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = Mockery::mock('\Sberbank\Message\RegisterOrderRequest')->makePartial();
     }
@@ -106,7 +107,7 @@ class RegisterOrderRequestTest extends TestCase
 
     public function testValidate()
     {
-        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $this->expectException(InvalidRequestException::class);
         $this->request
             ->setPassword('123456')
             ->setUserName('user_name');
@@ -125,5 +126,19 @@ class RegisterOrderRequestTest extends TestCase
         $method = $this->request->getMethodName();
         $this->assertTrue(is_string($method));
         $this->assertNotEmpty($method);
+    }
+
+    public function testPhone()
+    {
+        $this->assertSame($this->request, $this->request->setPhone('+71234567890'));
+        $result = $this->request->getParameter('phone');
+        $this->assertEquals('+71234567890', $result);
+    }
+
+    public function testEmail()
+    {
+        $this->assertSame($this->request, $this->request->setEmail('test@test.ru'));
+        $result = $this->request->getParameter('email');
+        $this->assertEquals('test@test.ru', $result);
     }
 }

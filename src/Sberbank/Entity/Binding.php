@@ -45,7 +45,7 @@ class Binding
     /**
      * @return string
      */
-    public function getBindingId()
+    public function getBindingId(): string
     {
         return $this->bindingId;
     }
@@ -53,7 +53,7 @@ class Binding
     /**
      * @return string
      */
-    public function getMaskedPan()
+    public function getMaskedPan(): string
     {
         return $this->maskedPan;
     }
@@ -61,7 +61,7 @@ class Binding
     /**
      * @return string
      */
-    public function getExpiryDate()
+    public function getExpiryDate(): string
     {
         return $this->expiryDate;
     }
