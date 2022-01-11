@@ -200,6 +200,6 @@ class RegisterOrderRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'register.do';
+        return 'rest/register.do';
     }
 }

@@ -37,6 +37,6 @@ class UnbindCardRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'unBindCard.do';
+        return 'rest/unBindCard.do';
     }
 }

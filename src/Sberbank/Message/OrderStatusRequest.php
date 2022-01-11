@@ -35,6 +35,6 @@ class OrderStatusRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'getOrderStatus.do';
+        return 'rest/getOrderStatus.do';
     }
 }

@@ -44,6 +44,6 @@ class RefundRequest extends RequestAbstract
      */
     public function getMethodName()
     {
-        return 'refund.do';
+        return 'rest/refund.do';
     }
 }
