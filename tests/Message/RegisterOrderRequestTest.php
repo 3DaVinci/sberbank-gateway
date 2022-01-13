@@ -9,6 +9,8 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Entity\Item;
+use Sberbank\Entity\OrderBundle;
 use Sberbank\Exception\InvalidRequestException;
 use Sberbank\Message\RegisterOrderRequest;
 
@@ -140,5 +142,19 @@ class RegisterOrderRequestTest extends TestCase
         $this->assertSame($this->request, $this->request->setEmail('test@test.ru'));
         $result = $this->request->getParameter('email');
         $this->assertEquals('test@test.ru', $result);
+    }
+
+    public function testOrderBundle()
+    {
+        $item = new Item();
+        $orderBundle = new OrderBundle([
+            'orderCreationDate' => '2022-01-01T01:01:01',
+            'customerDetails' => [],
+            'cartItems' => [$item],
+        ]);
+
+        $this->assertSame($this->request, $this->request->setOrderBundle($orderBundle));
+        $result = $this->request->getParameter('orderBundle');
+        $this->assertEquals($orderBundle->toArray(), $result);
     }
 }

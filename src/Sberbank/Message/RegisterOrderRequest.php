@@ -7,6 +7,7 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Entity\OrderBundle;
 use Sberbank\Exception\InvalidRequestException;
 
 /**
@@ -189,6 +190,16 @@ class RegisterOrderRequest extends RequestAbstract
         return $this->setParameter('email', $value);
     }
 
+    /**
+     * Блок, содержащий корзину товаров заказа.
+     *
+     * @param OrderBundle $value
+     * @return RequestAbstract
+     */
+    public function setOrderBundle(OrderBundle $value): RequestAbstract
+    {
+        return $this->setParameter('orderBundle', $value->toArray());
+    }
     /**
      * @throws InvalidRequestException
      */
