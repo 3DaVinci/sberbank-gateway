@@ -18,13 +18,13 @@ class BindingsResponse extends RestResponse
     /**
      * @var array
      */
-    private $bindingsCache;
+    private array $bindingsCache = [];
 
     /**
      * Не используется, т.к. в ответе есть поле errorMessage
      * @var array
      */
-    protected $errorMessages = [
+    protected array $errorMessages = [
         0 => 'Обработка запроса прошла без системных ошибок',
         1 => '[clientId] не задан',
         2 => 'Информация не найдена',
@@ -35,7 +35,7 @@ class BindingsResponse extends RestResponse
     /**
      * @return Binding[]|array
      */
-    public function getBindings()
+    public function getBindings(): array
     {
         if ($this->bindingsCache) {
 

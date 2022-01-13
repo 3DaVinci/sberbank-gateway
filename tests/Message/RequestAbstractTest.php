@@ -9,12 +9,13 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Exception\InvalidRequestException;
 
 class RequestAbstractTest extends TestCase
 {
-    private $request;
+    private Mockery\MockInterface $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = Mockery::mock('\Sberbank\Message\RequestAbstract')->makePartial();
     }
@@ -69,7 +70,7 @@ class RequestAbstractTest extends TestCase
 
     public function testValidate()
     {
-        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $this->expectException(InvalidRequestException::class);
         $this->request->validate();
 
         $this->request->initialize([

@@ -9,12 +9,13 @@ namespace Sberbank\Tests\Message;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
+use Sberbank\Exception\InvalidRequestException;
 
 class RefundRequestTest extends TestCase
 {
-    private $request;
+    private Mockery\MockInterface $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = Mockery::mock('\Sberbank\Message\RefundRequest')->makePartial();
     }
@@ -35,13 +36,13 @@ class RefundRequestTest extends TestCase
 
     public function testValidate()
     {
-        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $this->expectException(InvalidRequestException::class);
         $this->request
             ->setPassword('123456')
             ->setUserName('user_name');
         $this->request->validate();
 
-        $this->expectException(\Sberbank\Exception\InvalidRequestException::class);
+        $this->expectException(InvalidRequestException::class);
         $this->request->setOrderId('b8d70aa7-bfb3-4f94-b7bb-aec7273e1fce');
         $this->request->validate();
 

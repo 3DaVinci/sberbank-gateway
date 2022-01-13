@@ -7,6 +7,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Exception\InvalidRequestException;
+
 /**
  * Class BindCardRequest
  * @package Sberbank\Message
@@ -19,13 +21,13 @@ class BindCardRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setBindingId(string $value)
+    public function setBindingId(string $value): RequestAbstract
     {
         return $this->setParameter('bindingId', $value);
     }
 
     /**
-     * @throws \Sberbank\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function validate()
     {
@@ -35,7 +37,7 @@ class BindCardRequest extends RequestAbstract
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return 'bindCard.do';
     }

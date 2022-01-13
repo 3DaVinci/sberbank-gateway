@@ -7,17 +7,18 @@
 
 namespace Sberbank\Tests\Message;
 
+use Sberbank\Message\RestResponse;
 use Sberbank\Tests\SberbankTestCase;
 use Mockery;
 
 class RestResponseTest extends SberbankTestCase
 {
     /**
-     * @var \Sberbank\Message\RestResponse
+     * @var RestResponse
      */
     private $response;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->response = Mockery::mock('\Sberbank\Message\RestResponse')->makePartial();
     }
@@ -39,7 +40,6 @@ class RestResponseTest extends SberbankTestCase
         $this->response = Mockery::mock('\Sberbank\Message\RestResponse', [$request, $data])->makePartial();
         $this->assertEquals(200, $this->response->getCode());
 
-        $data = ['foo' => 'bar'];
         $request = $this->getMockRequest();
         $this->response = Mockery::mock('\Sberbank\Message\RestResponse', [$request, $data, 404])->makePartial();
         $this->assertEquals(404, $this->response->getCode());

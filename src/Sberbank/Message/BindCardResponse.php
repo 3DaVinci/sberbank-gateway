@@ -9,7 +9,7 @@ namespace Sberbank\Message;
 
 class BindCardResponse extends RestResponse
 {
-    protected $errorMessages = [
+    protected array $errorMessages = [
         0 => 'Обработка запроса прошла без системных ошибок',
         2 => 'Связка не найдена или имеет неверное состояние',
         5 => 'Доступ запрещен или пользователь должен сменить свой пароль',

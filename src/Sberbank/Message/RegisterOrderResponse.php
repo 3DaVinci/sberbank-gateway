@@ -13,7 +13,7 @@ namespace Sberbank\Message;
  */
 class RegisterOrderResponse extends RestResponse
 {
-    protected $errorMessages = [
+    protected array $errorMessages = [
         0 => 'Обработка запроса прошла без системных ошибок',
         1 => 'Заказ с таким номером уже зарегистрирован в системе',
         3 => 'Неизвестная (запрещенная) валюта',
@@ -25,7 +25,7 @@ class RegisterOrderResponse extends RestResponse
     /**
      * @return string|null
      */
-    public function getOrderId()
+    public function getOrderId(): ?string
     {
         return $this->data['orderId'] ?? null;
     }
@@ -33,7 +33,7 @@ class RegisterOrderResponse extends RestResponse
     /**
      * @return string|null
      */
-    public function getFormUrl()
+    public function getFormUrl(): ?string
     {
         return $this->data['formUrl'] ?? null;
     }
