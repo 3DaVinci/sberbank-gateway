@@ -20,12 +20,12 @@ use Sberbank\Http\Client as SberbankClient;
 class SberbankTestCase extends TestCase
 {
 
-    public function tearDown()
+    public function tearDown() : void
     {
         Mockery::close();
     }
 
-    public function setMockSberbankClient($mockFiles)
+    public function setMockSberbankClient($mockFiles): SberbankClient
     {
         if (!is_array($mockFiles)) {
             $mockFiles = (array) $mockFiles;
@@ -33,7 +33,7 @@ class SberbankTestCase extends TestCase
 
         $queue = [];
         foreach ($mockFiles as $mockFile) {
-            array_push($queue, $this->buildResponse($mockFile));
+            $queue[] = $this->buildResponse($mockFile);
         }
 
         $mock = new MockHandler($queue);
@@ -49,7 +49,7 @@ class SberbankTestCase extends TestCase
     /**
      * @return Mockery\MockInterface
      */
-    protected function getMockRequest()
+    protected function getMockRequest(): Mockery\MockInterface
     {
         return Mockery::mock('\Sberbank\Message\RequestInterface');
     }
@@ -58,7 +58,7 @@ class SberbankTestCase extends TestCase
      * @param string $mockFile
      * @return string
      */
-    protected function getMockContent($mockFile)
+    protected function getMockContent(string $mockFile): string
     {
         $body = '';
         $file = __DIR__.'/Mock/'.$mockFile.'.json';
@@ -73,7 +73,7 @@ class SberbankTestCase extends TestCase
      * @param string $mockFile
      * @return array|mixed
      */
-    protected function getMockAsArray($mockFile)
+    protected function getMockAsArray(string $mockFile)
     {
         $json = $this->getMockContent($mockFile);
 
@@ -84,7 +84,7 @@ class SberbankTestCase extends TestCase
      * @param string $mockFile
      * @return Response
      */
-    private function buildResponse($mockFile)
+    private function buildResponse(string $mockFile): Response
     {
         return new Response(200, [], $this->getMockContent($mockFile));
     }

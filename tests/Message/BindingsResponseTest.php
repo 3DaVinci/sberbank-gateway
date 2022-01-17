@@ -45,6 +45,6 @@ class BindingsResponseTest extends SberbankTestCase
         $this->assertEquals('Информация не найдена', $response->getErrorMessage());
         $this->assertEquals('Информация не найдена', $response->getErrorMessageByCode());
         $this->assertTrue(is_array($response->getBindings()));
-        $this->assertTrue(empty($response->getBindings()));
+        $this->assertEmpty($response->getBindings());
     }
 }

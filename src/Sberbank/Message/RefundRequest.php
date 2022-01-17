@@ -7,6 +7,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Exception\InvalidRequestException;
+
 class RefundRequest extends RequestAbstract
 {
     /**
@@ -15,7 +17,7 @@ class RefundRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setOrderId($value)
+    public function setOrderId(string $value): RequestAbstract
     {
         return $this->setParameter('orderId', $value);
     }
@@ -26,13 +28,13 @@ class RefundRequest extends RequestAbstract
      * @param int $value
      * @return RequestAbstract
      */
-    public function setAmount(int $value)
+    public function setAmount(int $value): RequestAbstract
     {
         return $this->setParameter('amount', $value);
     }
 
     /**
-     * @throws \Sberbank\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function validate()
     {
@@ -42,7 +44,7 @@ class RefundRequest extends RequestAbstract
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return 'refund.do';
     }

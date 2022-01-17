@@ -24,19 +24,19 @@ interface RequestInterface
      *
      * @return array
      */
-    public function getParameters();
+    public function getParameters(): array;
 
     /**
      * Get the response to this request (if the request has been sent)
      *
      * @return ResponseInterface
      */
-    public function getResponse();
+    public function getResponse(): ResponseInterface;
 
     /**
      * Send the request
      *
      * @return ResponseInterface
      */
-    public function send();
+    public function send(): ResponseInterface;
 }

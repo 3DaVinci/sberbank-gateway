@@ -7,6 +7,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Exception\InvalidRequestException;
+
 /**
  * Class PaymentCancellationRequest
  * @package Sberbank\Message
@@ -19,13 +21,13 @@ class PaymentCancellationRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setOrderId($value)
+    public function setOrderId(string $value): RequestAbstract
     {
         return $this->setParameter('orderId', $value);
     }
 
     /**
-     * @throws \Sberbank\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function validate()
     {
@@ -35,7 +37,7 @@ class PaymentCancellationRequest extends RequestAbstract
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return 'reverse.do';
     }

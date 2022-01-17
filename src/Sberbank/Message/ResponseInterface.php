@@ -18,45 +18,45 @@ interface ResponseInterface
      *
      * @return boolean
      */
-    public function isSuccessful();
+    public function isSuccessful(): bool;
 
     /**
      * Does the response require a redirect?
      *
-     * @return boolean
+     * @return mixed
      */
     public function getData();
 
     /**
-     * @return RequestInterface
+     * @return RequestInterface|null
      */
-    public function getRequest();
+    public function getRequest(): ?RequestInterface;
 
     /**
      * Response code
      *
      * @return null|string A response code from Sberbank gateway
      */
-    public function getCode();
+    public function getCode(): ?string;
 
     /**
      * Sberbank error code
      *
      * @return int|null
      */
-    public function getErrorCode();
+    public function getErrorCode(): ?int;
 
     /**
      * Sberbank error message
      *
      * @return string
      */
-    public function getErrorMessage();
+    public function getErrorMessage(): string;
 
     /**
      * Sberbank error message by code
      *
      * @return string
      */
-    public function getErrorMessageByCode();
+    public function getErrorMessageByCode(): string;
 }

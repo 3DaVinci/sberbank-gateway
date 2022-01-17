@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpDocMissingThrowsInspection */
+/** @noinspection PhpDocMissingThrowsInspection */
+
 /**
  * Author: Andrey Morozov
  * Email: andrey@3davinci.ru
@@ -7,9 +9,11 @@
 
 namespace Sberbank\Http;
 
+use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Message\RequestFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +25,7 @@ class Client implements HttpClient, RequestFactory
     /**
      * @var HttpClient
      */
-    private $httpClient;
+    private HttpClient $httpClient;
 
     /**
      * @var RequestFactory
@@ -42,15 +46,17 @@ class Client implements HttpClient, RequestFactory
      * @param string $protocolVersion
      * @return RequestInterface
      */
-    public function createRequest($method, $uri, array $headers = [], $body = null, $protocolVersion = '1.1')
+    public function createRequest($method, $uri, array $headers = [], $body = null, $protocolVersion = '1.1'): RequestInterface
     {
         return $this->requestFactory->createRequest($method, $uri, $headers, $body, $protocolVersion);
     }
+
     /**
-     * @param  RequestInterface $request
+     * @param RequestInterface $request
      * @return ResponseInterface
+     * @throws Exception
      */
-    public function sendRequest(RequestInterface $request)
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
         return $this->httpClient->sendRequest($request);
     }
@@ -62,10 +68,28 @@ class Client implements HttpClient, RequestFactory
      * @param array $headers
      * @return ResponseInterface
      */
-    public function get($uri, array $headers = [])
+    public function get($uri, array $headers = []): ResponseInterface
     {
         $request = $this->createRequest('GET', $uri, $headers);
 
         return $this->sendRequest($request);
     }
+
+    /**
+     * @return HttpClient
+     */
+    public function getHttpClient(): HttpClient
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @return RequestFactory
+     */
+    public function getRequestFactory()
+    {
+        return $this->requestFactory;
+    }
+
+
 }

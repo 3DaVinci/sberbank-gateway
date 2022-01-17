@@ -21,14 +21,14 @@ class RestGateway implements GatewayInterface
     /**
      * @var array
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * RestGateway constructor.
      * @param array $parameters
      * @param HttpClient|null $client
      */
-    public function __construct(array $parameters, $client = null)
+    public function __construct(array $parameters, HttpClient $client = null)
     {
         $this->httpClient = $client ?: new Client();
         $this->parameters = array_replace($this->getDefaultParameters(), $parameters);
@@ -40,7 +40,7 @@ class RestGateway implements GatewayInterface
      * @param array $parameters
      * @return RequestAbstract
      */
-    public function orderStatus(array $parameters = [])
+    public function orderStatus(array $parameters = []): RequestAbstract
     {
         return $this->createRequest('OrderStatus', $parameters);
     }
@@ -51,7 +51,7 @@ class RestGateway implements GatewayInterface
      * @param array $parameters
      * @return RequestAbstract
      */
-    public function registerOrder(array $parameters = [])
+    public function registerOrder(array $parameters = []): RequestAbstract
     {
         return $this->createRequest('RegisterOrder', $parameters);
     }
@@ -62,7 +62,7 @@ class RestGateway implements GatewayInterface
      * @param array $parameters
      * @return RequestAbstract
      */
-    public function paymentCancellation(array $parameters = [])
+    public function paymentCancellation(array $parameters = []): RequestAbstract
     {
         return $this->createRequest('PaymentCancellation', $parameters);
     }
@@ -73,7 +73,7 @@ class RestGateway implements GatewayInterface
      * @param array $parameters
      * @return RequestAbstract
      */
-    public function refund(array $parameters = [])
+    public function refund(array $parameters = []): RequestAbstract
     {
         return $this->createRequest('Refund', $parameters);
     }
@@ -84,7 +84,7 @@ class RestGateway implements GatewayInterface
      * @param string $clientId
      * @return RequestAbstract
      */
-    public function getBindings($clientId)
+    public function getBindings(string $clientId): RequestAbstract
     {
         return $this->createRequest('Bindings', ['clientId' => $clientId]);
     }
@@ -95,7 +95,7 @@ class RestGateway implements GatewayInterface
      * @param string $bindingId
      * @return RequestAbstract
      */
-    public function getBindCard($bindingId)
+    public function getBindCard(string $bindingId): RequestAbstract
     {
         return $this->createRequest('BindCard', ['bindingId' => $bindingId]);
     }
@@ -106,7 +106,7 @@ class RestGateway implements GatewayInterface
      * @param string $bindingId
      * @return RequestAbstract
      */
-    public function getUnbindCard($bindingId)
+    public function getUnbindCard(string $bindingId): RequestAbstract
     {
         return $this->createRequest('UnbindCard', ['bindingId' => $bindingId]);
     }
@@ -140,7 +140,7 @@ class RestGateway implements GatewayInterface
     {
         $classRequest = '\Sberbank\Message\\'.$classNmae.'Request';
         $classResponse = '\Sberbank\Message\\'.$classNmae.'Response';
-        /** @var \Sberbank\Message\RequestAbstract $requestObj */
+        /** @var RequestAbstract $requestObj */
         $requestObj = new $classRequest($this->httpClient, $classResponse);
 
         return $requestObj->initialize(array_replace($this->getParameters(), $parameters));

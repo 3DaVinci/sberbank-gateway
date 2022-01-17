@@ -7,6 +7,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Exception\InvalidRequestException;
+
 /**
  * Class OrderStatusRequest
  * @package Sberbank\Message
@@ -17,13 +19,13 @@ class OrderStatusRequest extends RequestAbstract
      * @param string $value
      * @return RequestAbstract
      */
-    public function setOrderId($value)
+    public function setOrderId(string $value): RequestAbstract
     {
         return $this->setParameter('orderId', $value);
     }
 
     /**
-     * @throws \Sberbank\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function validate()
     {
@@ -33,7 +35,7 @@ class OrderStatusRequest extends RequestAbstract
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return 'getOrderStatus.do';
     }
