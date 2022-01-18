@@ -39,6 +39,6 @@ class BindCardRequest extends RequestAbstract
      */
     public function getMethodName(): string
     {
-        return 'bindCard.do';
+        return 'rest/bindCard.do';
     }
 }

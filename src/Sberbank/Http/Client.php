@@ -76,6 +76,22 @@ class Client implements HttpClient, RequestFactory
     }
 
     /**
+     * Send a POST request.
+     *
+     * @param UriInterface|string $uri
+     * @param array $headers
+     * @param null $body
+     * @return ResponseInterface
+     * @throws Exception
+     */
+    public function post($uri, array $headers = [], $body = null): ResponseInterface
+    {
+        $request = $this->createRequest('POST', $uri, $headers, $body);
+
+        return $this->sendRequest($request);
+    }
+
+    /**
      * @return HttpClient
      */
     public function getHttpClient(): HttpClient
