@@ -166,12 +166,13 @@ class GooglePaymentRequest extends RequestAbstract
         return 'google/payment.do';
     }
 
-    public function send()
+    public function send(): ResponseInterface
     {
         /** @var \Psr\Http\Message\ResponseInterface $httpResponse */
-        $httpResponse = $this->sberbankClient->get(
-            $this->getUrl() . '?' . http_build_query($this->getParameters()),
-            ['Content-type' => 'application/json']
+        $httpResponse = $this->sberbankClient->post(
+            $this->getUrl(),
+            ['Content-type' => 'application/json'],
+            json_encode($this->getParameters(['orderBundle']))
         );
 
         $body = $httpResponse->getBody();
