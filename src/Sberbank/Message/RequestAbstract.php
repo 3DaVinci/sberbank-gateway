@@ -17,8 +17,8 @@ use Sberbank\Exception\RuntimeException;
  */
 abstract class RequestAbstract implements RequestInterface
 {
-    protected string $liveUrl = 'https://securepayments.sberbank.ru/payment/rest/';
-    protected string $testUrl = 'https://3dsec.sberbank.ru/payment/rest/';
+    protected $liveUrl = 'https://securepayments.sberbank.ru/payment/';
+    protected $testUrl = 'https://3dsec.sberbank.ru/payment/';
 
     /**
      * The request parameters
@@ -115,13 +115,25 @@ abstract class RequestAbstract implements RequestInterface
     }
 
     /**
-     * Get all parameters
+     * Return parameters listed in $keys
+     * Return all parameters if $keys empty
      *
+     * @param array $keys
      * @return array
      */
-    public function getParameters(): array
+    public function getParameters(array $keys = []): array
     {
-        return $this->parameters;
+        if (empty($keys)) {
+
+            return $this->parameters;
+        } else {
+            $params = [];
+            foreach ($keys as $key) {
+                $params[$key] = $this->getParameter($key);
+            }
+
+            return $params;
+        }
     }
 
     /**

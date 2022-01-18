@@ -57,6 +57,17 @@ class RestGateway implements GatewayInterface
     }
 
     /**
+     * Запрос оплаты заказа через GooglePay
+     *
+     * @param array $parameters
+     * @return RequestAbstract
+     */
+    public function googlePayment(array $parameters = [])
+    {
+        return $this->createRequest('GooglePayment', $parameters);
+    }
+
+    /**
      * Запрос отмены оплаты заказа
      *
      * @param array $parameters

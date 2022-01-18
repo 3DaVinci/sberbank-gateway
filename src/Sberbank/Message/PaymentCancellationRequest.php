@@ -39,6 +39,6 @@ class PaymentCancellationRequest extends RequestAbstract
      */
     public function getMethodName(): string
     {
-        return 'reverse.do';
+        return 'rest/reverse.do';
     }
 }

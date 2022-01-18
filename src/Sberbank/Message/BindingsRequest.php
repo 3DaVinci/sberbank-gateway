@@ -40,6 +40,6 @@ class BindingsRequest extends RequestAbstract
      */
     public function getMethodName(): string
     {
-        return 'getBindings.do';
+        return 'rest/getBindings.do';
     }
 }
