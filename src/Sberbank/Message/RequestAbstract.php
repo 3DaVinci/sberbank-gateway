@@ -115,13 +115,25 @@ abstract class RequestAbstract implements RequestInterface
     }
 
     /**
-     * Get all parameters
+     * Return parameters listed in $keys
+     * Return all parameters if $keys empty
      *
+     * @param array $keys
      * @return array
      */
-    public function getParameters(): array
+    public function getParameters(array $keys = []): array
     {
-        return $this->parameters;
+        if (empty($keys)) {
+
+            return $this->parameters;
+        } else {
+            $params = [];
+            foreach ($keys as $key) {
+                $params[$key] = $this->getParameter($key);
+            }
+
+            return $params;
+        }
     }
 
     /**

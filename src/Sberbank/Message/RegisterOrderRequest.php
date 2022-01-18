@@ -215,4 +215,35 @@ class RegisterOrderRequest extends RequestAbstract
     {
         return 'rest/register.do';
     }
+
+    public function send(): ResponseInterface
+    {
+        $httpResponse = $this->sberbankClient->post(
+            $this->getUrl() . '?' . http_build_query($this->getParameters([
+                'userName',
+                'password',
+                'orderNumber',
+                'amount',
+                'returnUrl',
+                'failUrl',
+                'pageView',
+                'sessionTimeoutSecs',
+                'currency',
+                'language',
+                'merchantLogin',
+                'bindingId',
+                'description',
+                'phone',
+                'email'
+            ])),
+            ['Content-type' => 'application/json'],
+            json_encode($this->getParameters(['orderBundle']))
+        );
+
+        $body = $httpResponse->getBody();
+        $jsonToArrayResponse = !empty($body) ? json_decode((string) $body, true) : [];
+        $responseClassName = $this->responseClassName;
+
+        return $this->response = new $responseClassName($this, $jsonToArrayResponse, $httpResponse->getStatusCode());
+    }
 }
