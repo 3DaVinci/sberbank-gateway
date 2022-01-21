@@ -2,6 +2,8 @@
 
 namespace Sberbank\Message;
 
+use Sberbank\Entity\OrderBundle;
+
 class GooglePaymentRequest extends RequestAbstract
 {
     /**
@@ -27,7 +29,10 @@ class GooglePaymentRequest extends RequestAbstract
     }
 
     /**
-     * Номер (идентификатор) заказа в системе магазина, уникален для каждого магазина в пределах системы
+     * Версия протокола сообщения, получаемого от Google. Если данный параметр указан, то валидные значение следующие:
+     * ECv1
+     * ECv2
+     * По умолчанию (в случае, если данный параметр не указан) работа будет идти по версии ECv1.
      *
      * @param string|int $value
      * @return RequestAbstract
@@ -151,6 +156,17 @@ class GooglePaymentRequest extends RequestAbstract
     public function setPaymentToken(string $value)
     {
         return $this->setParameter('paymentToken', $value);
+    }
+
+    /**
+     * Блок, содержащий корзину товаров заказа.
+     *
+     * @param OrderBundle $value
+     * @return RequestAbstract
+     */
+    public function setOrderBundle(OrderBundle $value): RequestAbstract
+    {
+        return $this->setParameter('orderBundle', $value->toArray());
     }
 
     /**

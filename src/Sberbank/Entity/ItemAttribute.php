@@ -4,47 +4,52 @@ namespace Sberbank\Entity;
 
 class ItemAttribute extends AbstractEntity
 {
+    const FIELD_PAYMENT_METHOD = 'paymentMethod';
+    const FIELD_PAYMENT_OBJECT = 'paymentObject';
+
     const PAYMENT_METHOD_FULL = 1;
     const PAYMENT_OBJECT_PRODUCT = 1;
     const PAYMENT_OBJECT_SERVICE = 4;
 
-    protected int $paymentMethod;
+    protected string $name;
 
-    protected int $paymentObject;
+    protected string $value;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPaymentMethod(): int
+    public function getName(): string
     {
-        return $this->paymentMethod;
+        return $this->name;
     }
 
     /**
-     * @param int $paymentMethod
+     * @param string $name
      * @return ItemAttribute
      */
-    public function setPaymentMethod(int $paymentMethod): ItemAttribute
+    public function setName(string $name): ItemAttribute
     {
-        $this->paymentMethod = $paymentMethod;
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPaymentObject(): int
+    public function getValue(): string
     {
-        return $this->paymentObject;
+        return $this->value;
     }
 
     /**
-     * @param int $paymentObject
+     * @param string $value
      * @return ItemAttribute
      */
-    public function setPaymentObject(int $paymentObject): ItemAttribute
+    public function setValue(string $value): ItemAttribute
     {
-        $this->paymentObject = $paymentObject;
+        $this->value = $value;
         return $this;
     }
+
+
 }

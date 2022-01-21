@@ -6,7 +6,7 @@ class OrderBundle extends AbstractEntity
 {
     protected string $orderCreationDate = '';
 
-    protected array $customerDetails = [];
+    protected ?array $customerDetails = null;
 
     protected array $cartItems = [];
 
