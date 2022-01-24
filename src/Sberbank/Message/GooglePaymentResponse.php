@@ -17,6 +17,33 @@ class GooglePaymentResponse extends RestResponse
      */
     public function getOrderId(): ?string
     {
-        return $this->data['orderId'] ?? null;
+        return $this->data['data']['orderId'] ?? null;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getErrorCode(): ?int
+    {
+        if (isset($this->data['error']['code'])) {
+
+            return (int) $this->data['error']['code'];
+        }
+
+        return null;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorMessage(): string
+    {
+        if (isset($this->data['error']['message'])) {
+
+            return $this->data['error']['message'];
+        }
+
+        return '';
     }
 }
