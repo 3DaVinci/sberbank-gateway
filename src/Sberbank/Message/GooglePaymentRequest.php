@@ -188,7 +188,19 @@ class GooglePaymentRequest extends RequestAbstract
         $httpResponse = $this->sberbankClient->post(
             $this->getUrl(),
             ['Content-type' => 'application/json'],
-            json_encode($this->getParameters(['orderBundle']))
+            json_encode($this->getParameters([
+                'merchant',
+                'orderNumber',
+                'paymentToken',
+                'amount',
+                'orderBundle',
+                'returnUrl',
+                'failUrl',
+                'description',
+                'phone',
+                'email',
+                'clientId'
+            ]))
         );
 
         $body = $httpResponse->getBody();

@@ -1,6 +1,6 @@
 {
     "name": "3davinci/sberbank-gateway",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "Sberbank REST client",
     "type": "library",
     "license": "MIT",
