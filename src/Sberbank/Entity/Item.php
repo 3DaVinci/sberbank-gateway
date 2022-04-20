@@ -11,7 +11,7 @@ class Item extends AbstractEntity
     protected string $positionId = '';
 
     /**
-     * Наименование или описание товарной позиции в свободной форме.
+     * Наименование или описание товарной позиции в свободной форме не более 100 символов.
      * @var string
      */
     protected string $name = '';
@@ -78,7 +78,7 @@ class Item extends AbstractEntity
      */
     public function setName(string $name): Item
     {
-        $this->name = $name;
+        $this->name = mb_substr($name, 0, 100);
         return $this;
     }
 
