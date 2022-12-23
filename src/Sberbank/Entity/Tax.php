@@ -29,11 +29,11 @@ class Tax extends AbstractEntity
         switch ($taxType) {
             case self::VAT_10:
             case self::VAT_10_110:
-                $this->setTaxSum((int) ($amount/110)*10);
+                $this->setTaxSum((int) (($amount/110)*10));
                 break;
             case self::VAT_20:
             case self::VAT_20_120:
-                $this->setTaxSum((int) ($amount/120)*20);
+                $this->setTaxSum((int) (($amount/120)*20));
                 break;
             default:
                 $this->setTaxSum(0);
