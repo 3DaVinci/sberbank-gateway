@@ -15,7 +15,7 @@
         "php": ">=7.4",
         "php-http/message": "1.5",
         "php-http/discovery": "1.14.1",
-        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/guzzle6-adapter": "v2.0.2",
         "ext-mbstring": "*",
         "ext-json": "*"
     },
