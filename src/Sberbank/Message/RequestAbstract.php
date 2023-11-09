@@ -17,8 +17,8 @@ use Sberbank\Exception\RuntimeException;
  */
 abstract class RequestAbstract implements RequestInterface
 {
-    protected $liveUrl = 'https://securepayments.sberbank.ru/payment/';
-    protected $testUrl = 'https://3dsec.sberbank.ru/payment/';
+    protected string $liveUrl = 'https://securepayments.sberbank.ru/payment/';
+    protected string $testUrl = 'https://3dsec.sberbank.ru/payment/';
 
     /**
      * The request parameters
