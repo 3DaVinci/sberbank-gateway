@@ -26,10 +26,5 @@
         "psr-4": {
             "Sberbank\\": "src/Sberbank/"
         }
-    },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
     }
 }
