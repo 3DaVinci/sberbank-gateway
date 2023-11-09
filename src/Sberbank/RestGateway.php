@@ -7,16 +7,16 @@
 
 namespace Sberbank;
 
-use Http\Client\HttpClient;
-use Sberbank\Http\Client;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Sberbank\Message\RequestAbstract;
 
 class RestGateway implements GatewayInterface
 {
     /**
-     * @var Client
+     * @var HttpClientInterface
      */
-    private $httpClient;
+    private HttpClientInterface $httpClient;
 
     /**
      * @var array
@@ -26,11 +26,10 @@ class RestGateway implements GatewayInterface
     /**
      * RestGateway constructor.
      * @param array $parameters
-     * @param HttpClient|null $client
      */
-    public function __construct(array $parameters, HttpClient $client = null)
+    public function __construct(array $parameters)
     {
-        $this->httpClient = $client ?: new Client();
+        $this->httpClient = HttpClient::create();
         $this->parameters = array_replace($this->getDefaultParameters(), $parameters);
     }
 
