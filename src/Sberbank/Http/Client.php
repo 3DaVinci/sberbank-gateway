@@ -15,24 +15,25 @@ use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Message\RequestFactory;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-class Client implements HttpClient, RequestFactory
+class Client implements ClientInterface, RequestFactory
 {
     /**
      * @var HttpClient
      */
-    private HttpClient $httpClient;
+    private ClientInterface $httpClient;
 
     /**
      * @var RequestFactory
      */
     private $requestFactory;
 
-    public function __construct(HttpClient $httpClient = null)
+    public function __construct(ClientInterface $httpClient = null)
     {
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->requestFactory = MessageFactoryDiscovery::find();
@@ -92,9 +93,9 @@ class Client implements HttpClient, RequestFactory
     }
 
     /**
-     * @return HttpClient
+     * @return ClientInterface
      */
-    public function getHttpClient(): HttpClient
+    public function getHttpClient(): ClientInterface
     {
         return $this->httpClient;
     }
