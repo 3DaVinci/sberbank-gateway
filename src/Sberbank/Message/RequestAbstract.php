@@ -9,7 +9,12 @@ namespace Sberbank\Message;
 
 use Sberbank\Exception\InvalidRequestException;
 use Sberbank\Exception\RuntimeException;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class RequestAbstract
@@ -40,18 +45,18 @@ abstract class RequestAbstract implements RequestInterface
     protected string $responseClassName;
 
     /**
-     * @var HttpClient
+     * @var HttpClientInterface
      */
-    protected HttpClient $sberbankClient;
+    protected HttpClientInterface $sberbankClient;
 
     abstract public function getMethodName();
 
     /**
      * RequestAbstract constructor.
-     * @param HttpClient $sberbankClient
+     * @param HttpClientInterface $sberbankClient
      * @param string $responseClassName
      */
-    public function __construct(HttpClient $sberbankClient, string $responseClassName = '\Sberbank\Message\RestResponse')
+    public function __construct(HttpClientInterface $sberbankClient, string $responseClassName = '\Sberbank\Message\RestResponse')
     {
         $this->sberbankClient = $sberbankClient;
         $this->responseClassName = $responseClassName;
@@ -180,7 +185,7 @@ abstract class RequestAbstract implements RequestInterface
     }
 
     /**
-     * Initialize an request with a given array of parameters
+     * Initialize on request with a given array of parameters
      *
      * @param array $parameters
      * @return RequestAbstract
@@ -197,15 +202,22 @@ abstract class RequestAbstract implements RequestInterface
         return $this;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     */
     public function send(): ResponseInterface
     {
-        $httpResponse = $this->sberbankClient->get(
+        $httpResponse = $this->sberbankClient->request(
+            'GET',
             $this->getUrl() . '?' . http_build_query($this->getParameters()),
-            ['Content-type' => 'application/json']
+            ['headers' => ['Content-type' => 'application/json']]
         );
 
-        $body = $httpResponse->getBody();
-        $jsonToArrayResponse = !empty($body) ? json_decode((string) $body, true) : [];
+        $jsonToArrayResponse = $httpResponse->toArray();
         $responseClassName = $this->responseClassName;
 
         return $this->response = new $responseClassName($this, $jsonToArrayResponse, $httpResponse->getStatusCode());
