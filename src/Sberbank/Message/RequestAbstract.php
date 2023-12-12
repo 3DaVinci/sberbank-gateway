@@ -10,6 +10,7 @@ namespace Sberbank\Message;
 use Sberbank\Exception\InvalidRequestException;
 use Sberbank\Exception\RuntimeException;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class RequestAbstract
@@ -42,7 +43,7 @@ abstract class RequestAbstract implements RequestInterface
     /**
      * @var HttpClient
      */
-    protected HttpClient $sberbankClient;
+    protected HttpClientInterface $sberbankClient;
 
     abstract public function getMethodName();
 
@@ -51,7 +52,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param HttpClient $sberbankClient
      * @param string $responseClassName
      */
-    public function __construct(HttpClient $sberbankClient, string $responseClassName = '\Sberbank\Message\RestResponse')
+    public function __construct(HttpClientInterface $sberbankClient, string $responseClassName = '\Sberbank\Message\RestResponse')
     {
         $this->sberbankClient = $sberbankClient;
         $this->responseClassName = $responseClassName;
