@@ -184,8 +184,8 @@ class GooglePaymentRequest extends RequestAbstract
 
     public function send(): ResponseInterface
     {
-        /** @var \Psr\Http\Message\ResponseInterface $httpResponse */
-        $httpResponse = $this->sberbankClient->post(
+        $httpResponse = $this->sberbankClient->request(
+            'POST',
             $this->getUrl(),
             ['Content-type' => 'application/json'],
             json_encode($this->getParameters([
@@ -203,8 +203,7 @@ class GooglePaymentRequest extends RequestAbstract
             ]))
         );
 
-        $body = $httpResponse->getBody();
-        $jsonToArrayResponse = !empty($body) ? json_decode((string) $body, true) : [];
+        $jsonToArrayResponse = $httpResponse->toArray();
         $responseClassName = $this->responseClassName;
 
         return $this->response = new $responseClassName($this, $jsonToArrayResponse, $httpResponse->getStatusCode());

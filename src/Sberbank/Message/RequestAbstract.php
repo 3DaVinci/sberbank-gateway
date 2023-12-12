@@ -147,7 +147,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param string $key
      * @return mixed
      */
-    protected function getParameter(string $key)
+    public function getParameter(string $key)
     {
         return $this->parameters[$key] ?? null;
     }
@@ -159,7 +159,7 @@ abstract class RequestAbstract implements RequestInterface
      * @param mixed $value
      * @return RequestAbstract
      */
-    protected function setParameter(string $key, $value): RequestAbstract
+    public function setParameter(string $key, $value): RequestAbstract
     {
         if (null !== $this->response) {
             throw new RuntimeException('Request cannot be modified after it has been sent!');
